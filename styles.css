@@ -86,7 +86,8 @@ p {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: var(--bg-color);
+    height: 100dvh;
+    background-color: #ffffff; /* Match video background */
     z-index: 9999;
     display: flex;
     justify-content: center;
@@ -97,7 +98,8 @@ p {
 #video-preloader video {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
+    transform: scale(1.5);
 }
 
 body.loading {
@@ -218,6 +220,7 @@ body.loading {
 .hero-section {
     position: relative;
     height: 100vh;
+    height: 100dvh;
     display: flex;
     align-items: center;
     padding: 0 5%;
@@ -292,6 +295,7 @@ body.loading {
     width: 100vw;
     max-width: 100%;
     height: 100vh;
+    height: 100dvh;
     overflow: hidden;
     z-index: 1;
 }
@@ -528,7 +532,8 @@ footer {
     }
     
     .hero-section {
-        height: 70vh;
+        height: 100vh;
+        height: 100dvh;
     }
     
     .section-header {
@@ -552,6 +557,18 @@ footer {
     
     .contact-container {
         grid-template-columns: 1fr;
+    }
+    
+    .scroll-sequence-section {
+        height: auto;
+        background-color: transparent;
+    }
+
+    .canvas-container {
+        position: relative;
+        width: 100vw;
+        height: 56.25vw; /* 16:9 aspect ratio */
+        top: 0;
     }
     
     .gallery-track img {
@@ -606,6 +623,7 @@ footer {
     position: relative;
     display: flex;
     min-height: 100vh;
+    min-height: 100dvh;
 }
 
 .about-who {

@@ -182,14 +182,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Draw first frame when loaded
         images[0].onload = function() {
-            // Setting canvas resolution based on window size
+            // Setting canvas resolution based on container size
             const updateCanvasSize = () => {
-                // Use device pixel ratio for sharper images on retina screens
+                const container = canvas.parentElement;
+                const rect = container.getBoundingClientRect();
                 const dpr = window.devicePixelRatio || 1;
-                canvas.width = window.innerWidth * dpr;
-                canvas.height = window.innerHeight * dpr;
-                canvas.style.width = window.innerWidth + 'px';
-                canvas.style.height = window.innerHeight + 'px';
+                
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
+                canvas.style.width = rect.width + 'px';
+                canvas.style.height = rect.height + 'px';
                 
                 // Reapply filter after resize because context resets
                 context.filter = 'contrast(1.15) saturate(1.2) brightness(1.05)';
@@ -210,15 +212,28 @@ document.addEventListener('DOMContentLoaded', () => {
             const canvasCSSWidth = canvas.width / (window.devicePixelRatio || 1);
             const canvasCSSHeight = canvas.height / (window.devicePixelRatio || 1);
             
-            const scale = Math.max(
-                canvasCSSWidth / imgElement.width,
-                canvasCSSHeight / imgElement.height
-            );
+            // On mobile (portrait-like or narrow screens), ensure the full width is visible (contain)
+            const isMobile = window.innerWidth <= 900;
+            
+            let scale;
+            if (isMobile) {
+                // object-fit: contain equivalent for mobile
+                scale = Math.min(
+                    canvasCSSWidth / imgElement.width,
+                    canvasCSSHeight / imgElement.height
+                );
+            } else {
+                // object-fit: cover equivalent for desktop
+                scale = Math.max(
+                    canvasCSSWidth / imgElement.width,
+                    canvasCSSHeight / imgElement.height
+                );
+            }
             
             const x = (canvasCSSWidth / 2) - (imgElement.width / 2) * scale;
             const y = (canvasCSSHeight / 2) - (imgElement.height / 2) * scale;
             
-            context.fillRect(0, 0, canvasCSSWidth, canvasCSSHeight);
+            context.clearRect(0, 0, canvasCSSWidth, canvasCSSHeight);
             context.drawImage(imgElement, x, y, imgElement.width * scale, imgElement.height * scale);
         }
 
@@ -232,9 +247,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const viewportHeight = window.innerHeight;
             
             let scrollProgress = 0;
-            if (sectionTop <= 0) {
-                const maxScroll = sectionHeight - viewportHeight;
-                scrollProgress = Math.abs(sectionTop) / maxScroll;
+            const isMobile = window.innerWidth <= 900;
+            
+            if (isMobile) {
+                // On mobile, the section is not sticky, so animate as it passes through the viewport
+                const totalTravel = viewportHeight + sectionHeight;
+                const currentTravel = viewportHeight - sectionTop;
+                scrollProgress = currentTravel / totalTravel;
+            } else {
+                // On desktop, the section is sticky, so animate based on scroll distance past the top
+                if (sectionTop <= 0) {
+                    const maxScroll = sectionHeight - viewportHeight;
+                    // Prevent divide by zero if maxScroll is 0
+                    scrollProgress = maxScroll > 0 ? Math.abs(sectionTop) / maxScroll : 0;
+                }
             }
 
             scrollProgress = Math.max(0, Math.min(1, scrollProgress));
