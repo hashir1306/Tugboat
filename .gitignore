@@ -1,7 +1,4 @@
-# Large video files (exceed GitHub 100MB limit)
-*.mp4
-
-# Large zip archives
+# Large zip archives (exceed GitHub 100MB limit)# Large zip archives
 *.zip
 
 # Old scroll frame folders (scroll4 is already tracked)
