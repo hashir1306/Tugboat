@@ -1144,8 +1144,11 @@ footer {
 }
 
 @media (max-width: 900px) {
-    .contact-split, .footer-grid, .footer-bottom-grid {
+    .contact-split, .footer-grid {
         grid-template-columns: 1fr;
+    }
+    .footer-bottom-grid {
+        flex-direction: column;
     }
     .footer-col {
         padding: 0 !important;
