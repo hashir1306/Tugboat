@@ -490,6 +490,12 @@ footer {
         --padding-section: 60px 5%;
     }
     
+    .logo img {
+        height: 40px;
+        max-width: 75vw;
+        object-fit: contain;
+    }
+    
     .mobile-menu-btn {
         display: block;
         cursor: pointer;
