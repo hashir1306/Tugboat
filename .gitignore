@@ -1,11 +1,10 @@
 # Large zip archives (exceed GitHub 100MB limit)# Large zip archives
 *.zip
 
-# Old scroll frame folders (scroll4 is already tracked)
+# Old scroll frame folders (scroll3 is now active)
 scroll/
 scroll1/
 scroll2/
-scroll3/
 
 # IDE
 .vscode/

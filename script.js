@@ -163,13 +163,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (canvas && scrollSection) {
         const context = canvas.getContext('2d', { alpha: false });
-        const frameCount = 300;
+        const frameCount = 240;
         
         // Enhance images by increasing contrast, saturation, and slightly sharpening
         context.filter = 'contrast(1.15) saturate(1.2) brightness(1.05)';
 
         const currentFrame = index => (
-            `scroll4/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
+            `scroll3/ezgif-frame-${(index + 1).toString().padStart(3, '0')}.jpg`
         );
 
         // Preload images into memory
